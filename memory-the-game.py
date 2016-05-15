@@ -28,8 +28,10 @@ def generate_deck(number_of_pairs):
 
 # define event handlers
 def mouseclick(pos):
+    global exposed
     # add game state logic here
     ndx = pos[0] // card_width
+    exposed[ndx] = True
     print ndx
 
 
