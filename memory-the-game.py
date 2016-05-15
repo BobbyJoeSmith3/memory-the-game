@@ -6,10 +6,13 @@ import random
 number_of_pairs = 8
 card_list = []
 exposed = []
+deck = []
+deck_index = 0
 
 # helper function to initialize globals
 def new_game():
     print card_list
+    print exposed
 
 def generate_deck(number_of_pairs):
     #create and concatenate two lists of numbers range 0-8
@@ -23,16 +26,22 @@ def generate_deck(number_of_pairs):
     while i < (number_of_pairs * 2):
        exposed.append(False)
        i += 1
-    print exposed
 
 # define event handlers
 def mouseclick(pos):
     # add game state logic here
-    pass
+    global deck, deck_index
+    deck_index = 0
+    for card in deck:
+        if pos[0] > card[0] and pos[0] < card[1]:
+            print deck_index
+            break
+        deck_index += 1
 
 
 # cards are logically 50x100 pixels in size
 def draw(canvas):
+    global deck
     card_start = 0
     card_width = 50
     #draw cards
@@ -40,6 +49,7 @@ def draw(canvas):
         canvas.draw_polygon([(card_start,0), ((card_start + card_width),0),
                        ((card_start + card_width),100), (card_start,100)],
                        1, 'black', 'green')
+        deck.append((card_start, card_start + card_width))
         if exposed[card] == True:
             canvas.draw_text(str(card_list[card]), [card_start, 24], 24, "White")
         card_start += card_width
