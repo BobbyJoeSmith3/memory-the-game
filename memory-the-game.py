@@ -31,7 +31,6 @@ def generate_deck(number_of_pairs):
 def mouseclick(pos):
     # add game state logic here
     global deck, deck_index
-    deck_index = 0
     for card in deck:
         if pos[0] > card[0] and pos[0] < card[1]:
             print deck_index
@@ -49,9 +48,12 @@ def draw(canvas):
         canvas.draw_polygon([(card_start,0), ((card_start + card_width),0),
                        ((card_start + card_width),100), (card_start,100)],
                        1, 'black', 'green')
+        #add coordinates of card to deck list so we can check which card users selects
         deck.append((card_start, card_start + card_width))
+        #draw the number of the card if the card is exposed
         if exposed[card] == True:
             canvas.draw_text(str(card_list[card]), [card_start, 24], 24, "White")
+        #move over a space to draw the next card
         card_start += card_width
 
 
