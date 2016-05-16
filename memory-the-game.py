@@ -7,9 +7,13 @@ number_of_pairs = 8
 card_list = []
 exposed = []
 card_width = 50
+exposed_pair_value = []
+exposed_pair_index = []
 
 # helper function to initialize globals
 def new_game():
+    global state
+    state = 0
     print card_list
     print exposed
 
@@ -28,12 +32,32 @@ def generate_deck(number_of_pairs):
 
 # define event handlers
 def mouseclick(pos):
-    global exposed
-    # add game state logic here
+    global exposed, state, exposed_pair_value, exposed_pair_index, card_list
     ndx = pos[0] // card_width
-    exposed[ndx] = True
     print ndx
+    # add game state logic here
+    if exposed[ndx] != True:
+        if state == 0:
+            state = 1
+        elif state == 1:
+            state = 2
+        else:
+            state = 1
 
+    if exposed[ndx] != True:
+        if state == 1:
+            exposed_pair_value[0] = card_list[ndx]
+            exposed_pair_index[0] = ndx
+            exposed[ndx] = True
+        if state == 2:
+            exposed_pair_value[1] = card_list[ndx]
+            exposed_pair_index[1] = ndx
+            exposed[ndx] = True
+            if exposed_pair_value[0] != exposed_pair_value[1]:
+                exposed[exposed_pair_index[0]] = False
+                exposed[exposed_pair_index[1]] = False
+    print "state = " + str(state)
+    exposed[ndx] = True
 
 
 # cards are logically 50x100 pixels in size
