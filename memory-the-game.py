@@ -45,6 +45,14 @@ def new_game():
     label.set_text("Turns = " + str(TURNS))
 
 
+def we_have_a_winner():
+    all_cards_exposed = True
+    for card in EXPOSED:
+        if card == False:
+            all_cards_exposed = False
+    return all_cards_exposed
+
+
 # define event handlers
 def mouseclick(pos):
     global EXPOSED, GAME_STATE, TURNS
@@ -117,6 +125,8 @@ def draw(canvas):
         text_x = text_x + CARD_WIDTH
         card_x = card_x + CARD_WIDTH
 
+    if we_have_a_winner():
+        canvas.draw_text("Winner!", (225, 100), 100, "blue")
 
 
 # create frame and add a button and labels
