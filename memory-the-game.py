@@ -55,41 +55,42 @@ def mouseclick(pos):
 
     # add game state logic here
     # only change game state if card isn't already exposed
-    if GAME_STATE == 0:
-        # flip card
-        EXPOSED[card_idx] = True
-        # assign card value to choice 1
-        CHOICE1_VALUE = DECK[card_idx]
-        # temporarily store card index of choice 1
-        CHOICE1_INDEX = card_idx
-        # change game state
-        GAME_STATE = 1
-    elif GAME_STATE == 1 and EXPOSED[card_idx] == False:
-        # flip card
-        EXPOSED[card_idx] = True
-        # assign card value to choice 2
-        CHOICE2_VALUE = DECK[card_idx]
-        # temporarily store card index of choice 2
-        CHOICE2_INDEX = card_idx
-        # change game state
-        GAME_STATE = 2
-    else:
-        # increment turn counter
-        TURNS = TURNS + 1
-        label.set_text("Turns = " + str(TURNS))
-        # check if cards are the same, if not flip
-        if CHOICE1_VALUE != CHOICE2_VALUE:
-            # flip cards back over
-            EXPOSED[CHOICE1_INDEX] = False
-            EXPOSED[CHOICE2_INDEX] = False
-        # flip card
-        EXPOSED[card_idx] = True
-        # assign card value to choice 1
-        CHOICE1_VALUE = DECK[card_idx]
-        # temporarily store card index of choice 1
-        CHOICE1_INDEX = card_idx
-        # change game state
-        GAME_STATE = 1
+    if EXPOSED[card_idx] == False:
+        if GAME_STATE == 0:
+            # flip card
+            EXPOSED[card_idx] = True
+            # assign card value to choice 1
+            CHOICE1_VALUE = DECK[card_idx]
+            # temporarily store card index of choice 1
+            CHOICE1_INDEX = card_idx
+            # change game state
+            GAME_STATE = 1
+        elif GAME_STATE == 1:
+            # flip card
+            EXPOSED[card_idx] = True
+            # assign card value to choice 2
+            CHOICE2_VALUE = DECK[card_idx]
+            # temporarily store card index of choice 2
+            CHOICE2_INDEX = card_idx
+            # change game state
+            GAME_STATE = 2
+        else:
+            # increment turn counter
+            TURNS = TURNS + 1
+            label.set_text("Turns = " + str(TURNS))
+            # check if cards are the same, if not flip
+            if CHOICE1_VALUE != CHOICE2_VALUE:
+                # flip cards back over
+                EXPOSED[CHOICE1_INDEX] = False
+                EXPOSED[CHOICE2_INDEX] = False
+            # flip card
+            EXPOSED[card_idx] = True
+            # assign card value to choice 1
+            CHOICE1_VALUE = DECK[card_idx]
+            # temporarily store card index of choice 1
+            CHOICE1_INDEX = card_idx
+            # change game state
+            GAME_STATE = 1
 
 
 # cards are logically 50x100 pixels in size
