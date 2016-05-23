@@ -27,22 +27,29 @@ def generate_cards(low_card, high_card):
     num_of_cards = len(DECK)
     for card in range(num_of_cards):
         EXPOSED.append(False)
-    # DELETE PRINT STATEMENTS AFTER DEBUGGING
-    print(DECK)
-    print(EXPOSED)
-    print(len(EXPOSED))
-    return DECK
 
 
 def new_game():
-    generate_cards(0,7)
+    global TURNS, DECK
+
+    # reshuffle cards
+    random.shuffle(DECK)
+
+    # hide all cards
+    num_of_cards = len(DECK)
+    for card in range(num_of_cards):
+        EXPOSED[card] = False
+
+    # reset turn counter
+    TURNS = 0
+    label.set_text("Turns = " + str(TURNS))
 
 
 # define event handlers
 def mouseclick(pos):
     global EXPOSED, GAME_STATE, TURNS
     global CHOICE1_VALUE, CHOICE2_VALUE, CHOICE1_INDEX, CHOICE2_INDEX
-    #FIRST_CHOICE_VALUE, FIRST_CHOICE_INDEX, CHOICE1_VALUE, CHOICE2_VALUE, CHOICE1_INDEX, CHOICE2_INDEX
+
     # determine which card was clicked
     card_idx = pos[0] // CARD_WIDTH
 
@@ -94,6 +101,7 @@ def draw(canvas):
     card_index = 0
     card_x = 0
     card_y = 0
+
     # draw cards
     for card_value in DECK:
         canvas.draw_polygon([(card_x, card_y),
@@ -109,6 +117,7 @@ def draw(canvas):
         card_x = card_x + CARD_WIDTH
 
 
+
 # create frame and add a button and labels
 frame = simplegui.create_frame("Memory", 800, 100)
 frame.add_button("Reset", new_game)
@@ -119,7 +128,7 @@ frame.set_mouseclick_handler(mouseclick)
 frame.set_draw_handler(draw)
 
 # get things rolling
-new_game()
+generate_cards(0,7)
 frame.start()
 
 
